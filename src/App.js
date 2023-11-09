@@ -14,15 +14,19 @@ import SignUp from './components/signup';
 import SignIn from './components/sign-in';
 import SignOut from './components/sign-out';
 import { useNavigate } from 'react-router-dom';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from './firebase';
+import SavedPosts from './components/savedposts';
+import JoinedSubs from './components/joinedsubs';
+import axios from 'axios';
 const arr = []
 const pdata= []
 function App() {
 const [data, setData] = useState(arr)
 const [postdata, setPostData] = useState(pdata)
-const[isLoggedin, setIsLoggedin] = useState(false);
+const[isLoggedin, setIsLoggedin] = useState('');
 const navigate = useNavigate();
+const [cl, setcl] = useState(false);
 
 useEffect(()=>{
     fetchsubs();
@@ -32,54 +36,69 @@ useEffect(()=>{
     fetchposts();
   },[postdata])
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setIsLoggedin(true);
-      } else {
-        setIsLoggedin(false);
+    const listen = onAuthStateChanged(auth, (user) => {
+           
+        if (user) {
+          setIsLoggedin(user)
+         } else {
+          setIsLoggedin(null);
+        }
       }
-    });
-  
+      );
+  return ()=>{
+    listen();
+  }
     // Cleanup the observer when the component unmounts
     
   }, []);
 
-  async function subhandler(movie){
-    const response = await fetch('https://reddit-react-46092-default-rtdb.firebaseio.com/subreddit.json', {
-      method: 'POST',
-      body: JSON.stringify(movie),
-      headers:{
-        'Content-Type': 'application/json'
+  async function subhandler(movie) {
+    try {
+      const response = await axios.post('http://localhost:4000/subreddits', movie, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      if (response.status === 200) {
+        const dataR = response.data;
+        // Do something with dataR if needed
+      } else {
+        // Handle the error here, e.g., display an error message
+        console.error('Error:', response.status, response.statusText);
       }
-    });
-    const dataR = await response.json();
-   }
+    } catch (error) {
+      // Handle Axios or other errors
+      console.error('Axios or other error:', error);
+      alert(error)
+    }
+  }
+  
 
 
-   async function posthandler(pdata){
-    const response = await fetch('https://reddit-react-46092-default-rtdb.firebaseio.com/posts.json', {
-      method: 'POST',
-      body: JSON.stringify(pdata),
-      headers:{
-        'Content-Type': 'application/json'
-      }
-    });
-    const dataR = await response.json();
-
-   }
-
+  async function posthandler(pdata) {
+    try {
+      const response = await axios.post('http://localhost:4000/posts', pdata, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      // Axios automatically parses the JSON response, so you can access it directly
+      const dataR = response.data;
+  
+      // Do something with dataR if needed
+    } catch (error) {
+      // Handle Axios or other errors
+      console.error('Axios or other error:', error);
+    }
+  }
 
    async function updatevotehandler(id,pid,  Vote, voteType){
-    const res = await fetch('https://reddit-react-46092-default-rtdb.firebaseio.com/posts.json');
-    const R = await res.json();
-    console.log(R)
-    const reqid = Object.keys(R).find((key) => (
-      R[key].pid === pid
-    ));
+    const res = await fetch(`http://localhost:4000/posts/${pid}`);
+    const pd = await res.json();
+    console.log(pd)
     id= auth.currentUser.uid;
-    
-    const newres = await fetch(`https://reddit-react-46092-default-rtdb.firebaseio.com/posts/${reqid}.json`);
-    const pd = await newres.json();
     if (voteType === 'upvote') {
       if (!pd.upvotepressed[id]) {
           if (pd.downvotepressed[id]) {
@@ -112,15 +131,29 @@ useEffect(()=>{
       pd.upvotepressed[id] = false;
   }
   
-    console.log(pd)
-    
-    const response = await fetch(`https://reddit-react-46092-default-rtdb.firebaseio.com/posts/${reqid}.json`, {
-      method: 'PUT',
-      body: JSON.stringify(pd),
-      headers:{
-        'Content-Type': 'application/json'
+  try {
+    const response = await axios.put(
+      `http://localhost:4000/posts/${pid}`,
+      pd,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
       }
-    });
+    );
+  
+    if (response.status === 200) {
+      // PUT request was successful
+      console.log('Post updated successfully.');
+    } else {
+      // Handle other response statuses here
+      console.error('Error:', response.status, response.statusText);
+    }
+  } catch (error) {
+    // Handle Axios or parsing errors
+    console.error('Axios or JSON parsing error:', error);
+  }
+  
     fetchposts();
    }
   
@@ -128,19 +161,20 @@ useEffect(()=>{
   
 
   async function fetchsubs(){
-    const response = await fetch('https://reddit-react-46092-default-rtdb.firebaseio.com/subreddit.json');
+    const response = await fetch('http://localhost:4000/subreddits');
   const dataR = await response.json();
   const extractedData = Object.keys(dataR).map((key) => ({
     title: dataR[key].title,
     description: dataR[key].description,
-    id: dataR[key].id
+    id: dataR[key].id,
+    members: dataR[key].members
   }));
 
   setData(extractedData)
   }
 
   async function fetchposts(){
-    const response = await fetch('https://reddit-react-46092-default-rtdb.firebaseio.com/posts.json');
+    const response = await fetch('http://localhost:4000/posts');
   const postsR = await response.json();
   const extractedpostData = Object.keys(postsR).map((key) => ({
     title: postsR[key].title,
@@ -151,13 +185,16 @@ useEffect(()=>{
     id: postsR[key].id,
     pid:postsR[key].pid,
     upvotepressed: postsR[key].upvotepressed,
-    downvotepressed: postsR[key].downvotepressed    
+    downvotepressed: postsR[key].downvotepressed,
+    members: postsR[key].members
   }));
 
   setPostData(extractedpostData)
   }
   
-
+const onloggoin = (k)=>{
+  setIsLoggedin(k)
+}
 
 
 
@@ -201,22 +238,29 @@ useEffect(()=>{
     updatevotehandler(id,pid, ne, 'downvote');
   };
 
+  const handlec = (v)=>{
+    setcl(v);
+
+  }
+
   
   return (
   <>
-     {isLoggedin && <Navbar formD={data} />}
+     {isLoggedin? <Navbar formD={data} onc= {handlec}/> : ''}
 
      <Routes>
-  <Route path="/signin" element={<SignIn  />} />
+  <Route path="/signin" element={<SignIn  onL = {onloggoin}/>} />
   {isLoggedin && (
     <>
         <Route path="/signout" element={<SignOut  />} />
       <Route path="/homepage" element={<HomePage pdata={postdata} Uv={globalupvote} Dv={globaldownvote} />} />
       <Route path="/form" element={<SubredditCreationForm onsubreddit={subhandler} />} />
       <Route path="/profile" element={<Profile data={data} />} />
-      <Route path="/subredditpage" element={<SubredditPage formD={data} pdata={postdata} Uv={globalupvote} Dv={globaldownvote} />} />
+      <Route path="/subredditpage" element={<SubredditPage formD={data} pdata={postdata} Uv={globalupvote} Dv={globaldownvote}  cl = {cl}/>} />
       <Route path="/postcreate" element={<CreatePosts oncreate={posthandler} formD={data} />} />
       <Route path="/commentpage" element={<CommentPage  formD={data} pdata={postdata} Uv={globalupvote} Dv={globaldownvote} />} />
+      <Route path="/savedposts" element={<SavedPosts formD={postdata}/>} />
+      <Route path="/joinedsubs" element={<JoinedSubs formD={data}/>} />
     </>
   ) }
   <Route path="/" element={<SignUp />} />

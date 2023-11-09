@@ -6,7 +6,7 @@
     color: #fff;
     font-size: 1.2rem;
     height: 50px;
-    gap: 1rem;
+    gap: 1rem;      
   }
   
   .logo {
@@ -112,3 +112,104 @@
     text-decoration: none;
     border: none;
   }
+
+  .profile-con{
+    display: flex;
+    align-items: center;
+     gap:0.5em;
+    height: 50px;
+    width:130px;
+    padding-left: 10px;
+    cursor: pointer;
+   margin-right: 15px;
+    position:relative;
+ 
+  
+      }
+
+  .profile-con:hover{
+    background-color: #333;
+
+  }
+  .rounded{
+    width:35px;
+    height:35px;
+    object-fit: contain;
+    border:solid white 3px;
+    margin-top: 5px;
+    border-radius: 50%;
+   
+ 
+  }
+
+ .pf{
+  text-decoration: none;
+  font-size: 15px;
+  color:white;
+ }
+
+ .hu{
+  display: flex;
+  flex-direction: column;
+
+ 
+
+
+ 
+ }
+ 
+ .dugh{
+  display:flex;
+  flex-direction: column;
+position: absolute;
+
+  margin-top:50px;
+  background-color:  #0603d3;    
+  font-size: 15px;
+  height:160px;
+  
+  width: 140px;
+  right:135px;
+ 
+ }
+
+ .p{
+  margin-top:10px;
+  cursor: pointer;
+width:120px;
+  padding: 10px;
+  margin-right: 5px;
+  text-decoration: none;
+  color:white
+ }
+ .p:hover{
+  background-color: #333;
+ }
+
+ .m{
+  margin-top:10px;
+  cursor: pointer;
+width:120px;
+  padding: 10px;
+  margin-right: 5px;
+  text-decoration: none;
+  color:white
+ }
+
+ .m:hover{
+  background-color: #333;
+ }
+
+ .s{
+  margin-top:10px;
+  cursor: pointer;
+width:120px;
+  padding: 10px;
+  margin-right: 5px;
+  text-decoration: none;
+  color:white
+ }
+
+ .s:hover{
+  background-color: #333;
+ }

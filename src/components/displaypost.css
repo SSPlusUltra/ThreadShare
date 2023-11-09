@@ -1,13 +1,11 @@
 .post-card{
   display: flex;
-  justify-content: flex-start;
   flex-direction: row;
   color:white;
-  width:45%;
-
-  margin-bottom: 20px;
+  width:100%;
+  overflow:auto;
   background-color:#303030;
-  margin-left: 370px;
+  height:230px;
 
   border:solid white 1px;
 }
@@ -28,6 +26,8 @@ margin-left: 5px;
 
 .post-content{
   margin-bottom: 35px;;
+  padding-right: 20px;
+
 }
 
 .comments-main{
@@ -37,5 +37,9 @@ margin-left: 5px;
 .footer{
   display: flex;
   margin-left: 150px;
-  margin-bottom: 10px;
+
+}
+
+.bookmark-main{
+  cursor: pointer;
 }

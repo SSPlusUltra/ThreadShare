@@ -1,14 +1,18 @@
 .community-container{
-    width: 270px;
     background-color: #3d3d3d;
+    width:200px;
     display: flex;
     align-items: center;
-    margin-right: 50px;
+    overflow:auto;
     border:solid white 1px;
     height:400px;
     flex-direction: column;
     justify-content: flex-start;
-    gap:1em;
+    gap:0.75em;
+    margin-bottom: 20px;
+    
+    
+    
 }
 
 .logo-container {
@@ -33,6 +37,22 @@
   }
 
   .community-desc{
-    padding: 10px;
+    padding-top: 10px;
     color: aliceblue;
+    width:80%;
+    padding-left: 15px;
+    overflow-wrap: break-word;
+
+ 
+  }
+
+  .join-sub{
+    background-color: blue;
+    width: 80px;
+    border-radius: 10px;
+    align-content: center;
+    padding-bottom:4px ;
+    color: white;
+    cursor:pointer;
+    border:solid white 2px;
   }

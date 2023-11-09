@@ -5,13 +5,19 @@ import { Link } from 'react-router-dom';
 import Vote from './vote';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComment, faBookmark, faShare } from '@fortawesome/free-solid-svg-icons'
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { auth } from '../firebase';
 
 const PostDisplay = (props) => {
 
 
+  async function postsavehandler (){
+   props.onhandle(props.v6)
 
+  }
     
-if (!props.v1) {
+if (!props.v5) {
     return <p>No posts available.</p>;
   }
 
@@ -30,7 +36,7 @@ if (!props.v1) {
   </div>
 
   <div className="post-content">
-    <p>{props.v2}</p>
+    <p style={{ textAlign: 'justify' }}>{props.v2}</p>
   </div>
 <div className='footer'>
  <div className='comments-main'>
@@ -44,28 +50,12 @@ if (!props.v1) {
     </Link>
     </div>
 
-    <div className='comments-main'>
-<Link to={{
-          pathname: '/commentpage',
-          search: `?id=${encodeURIComponent(props.v3)}`,
-        }} className="comments">
-      <FontAwesomeIcon icon={faBookmark} style={{color:'white'}} size="xl" />
+    <div className='bookmark-main'  onClick={postsavehandler}>
+    <FontAwesomeIcon icon={faBookmark} style={{color:'yellow'}} size="xl" />
        <span style={{color:'white', margin:"0px 70px 0px 5px"}} >save</span>
- 
-    </Link>
     </div>
 
 
-    <div className='comments-main'>
-<Link to={{
-          pathname: '/commentpage',
-          search: `?id=${encodeURIComponent(props.v3)}`,
-        }} className="comments">
-       <FontAwesomeIcon icon={faShare} style={{color:'white'}} size="xl" />
-       <span style={{color:'white', margin:"0px 70px 0px 5px"}} >share</span>
- 
-    </Link>
-    </div>
 
 
 

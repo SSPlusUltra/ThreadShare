@@ -1,98 +1,118 @@
-.other-container{
-    display:flex;
-    height: 500px;
-    align-items: center;
+
+.outc-pc{
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  gap:2em;
+  
 
 
 }
 
 
-.post-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width:40%;
-    background-color: #3d3d3d;
-    margin-top: 100px;
-    padding: 10px;
-    padding-top: 30px;
-    height:50%;
-    border: solid white 1px;
-    margin-right: 20px;
-}
 
-.sub-thread-dropdown{
-    align-self: flex-start;
-    margin-left: 12px;
-    width: 200px;
-    border: solid white 1px;
-    display: flex;
-    cursor:pointer;
-    justify-content: space-between;
+.post-form{
+  display:flex;
+  flex-direction: column;
+  border:solid white 2px;
+  width:40%;
+  gap:1em;
+  background-color:black;
+  padding: 10px;
+
  
+}
+
+.dd-btn{
 
 }
 
-.drop-down-content{
-    display:flex;
-    flex-direction: column;
-    align-self: flex-start;
-    padding-left: 12px;
+.cm-btn{
+  width:200px;
+  height:40px;
+  border-top-left-radius: 5px; /* Adjust the radius as needed */
+  
+  background-color:rgb(161, 156, 156);
+}
 
-    width: 204px;
-    position: absolute;
-    margin-top: 33px;
-   
-  }
+.combo{
+  display:flex;
+  width:230px;
 
-  .sp{
-    background-color: red;
-    cursor: pointer;
-    position: relative;
-   
-  }
+}
 
+.syn{
+  background-color: blue;
+  display: flex;
+  align-items: center;
+  width:15px;
+  justify-content: center;
+  border-top-right-radius: 5px; /* Adjust the radius as needed */
+  border-bottom-right-radius: 5px; /* Adjust the radius as needed */
+  cursor: pointer;
+
+}
 
 .caret-down{
     color:white;
-    padding-right: 20px;
-    padding-top: 3px;
-}
-.main-button{
-    background-color:#3a383830!important ;
-    text-indent: 10px;
-    height:30px;
-    color: rgb(238, 231, 231);
-    padding-top: 2px;;
 
 }
 
-.input-field {
-    height: 40px;
-    /* Other input field styles */
-    margin-bottom: 10px;
-    width:95%;
-    background-color:#30303030!important ;
-    text-indent: 10px;
-    border: solid white 1px;
-    color: grey;
-    margin-top: 8px;
-    }
-  
-  .input-field-large {
-    height: 120px;
-    width: 95%;
-    /* Other input field styles */
-    background-color:#30303030!important ;
-    text-indent: 10px;
-    border: solid white 1px;
-  }
 
-  .post-it{
-    margin-top:20px;
-    align-self: flex-end;
-    background-color:blue ;
-    border-radius: 20px;
-    width:100px
-  }
+.title-fl{
+  height:30px;
+  width:90%;
+  border-radius: 5px;
+  background-color:rgb(161, 156, 156);
+}
+
+.desc-fl{
+  height:100px;
+  width:90%;
+  border-radius: 5px;
+  background-color:rgb(161, 156, 156);
+}
+
+.p-btn{
+  width:100px;
+  height: 30px;
+  align-self: flex-end;
+  background-color: blue;
+  border-radius: 20px;
+}
+
+.drop-down-content{
+  background-color:rgb(161, 156, 156);
+  width:197px;
+  padding-left:10px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-bottom-left-radius: 5px; /* Adjust the radius as needed */
+  position:fixed;
+  border: 1px solid white
+}
+
+.sp{
+margin-bottom: 5px;
+cursor:pointer;
+height: 30px;
+width:90%;
+  padding-left: 10px;
+  text-align: start;
+  padding-top: 5px;
   
+}
+.sp:hover{
+  background-color: blue;
+  color:white;
+  border-radius: 5px;;
+  
+ 
+}
+
+.uwu{
+  width:15%;
+  height:auto;
+  margin-top: 30px;
+}

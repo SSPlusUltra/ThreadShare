@@ -4,11 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { storage } from '../firebase';
 import{ref,uploadBytes} from 'firebase/storage'
 import {v4} from 'uuid'
+import temp from '../logo3.jpg'
 
 const SubredditCreationForm = (props) => {
  const [newtitle, setTitle] = useState('')
  const [newdesc, setDesc] = useState('')
- const [imageUpload, setImageUpload] = useState(null);
+ const [imageUpload, setImageUpload] = useState();
 const navigate = useNavigate()
  const handleTitle = (event)=>{
     setTitle(event.target.value);
@@ -35,7 +36,8 @@ const navigate = useNavigate()
     const data = {
         title: "r/"+newtitle,
         description: newdesc,
-        id: subid
+        id: subid,
+        members:{'initial': true},
     }
 props.onsubreddit(data);
 const subredditTitle = encodeURIComponent(data.title);
@@ -47,7 +49,7 @@ navigate(url)
 
  }
   return (
-  <form onSubmit={handleSubmit}> 
+  <form className='jp' onSubmit={handleSubmit}> 
   <div className="post-container">  
   <h2 className='create-community'>Create Community</h2>
     <input onChange={handleTitle} type='text-area' 

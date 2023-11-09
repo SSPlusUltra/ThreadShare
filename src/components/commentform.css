@@ -1,13 +1,13 @@
 .comment-form-container {
     border: 1px solid #ccc;
-    padding: 10px;
+ 
     
     background-color: #3d3d3d !important;
-    margin-bottom: 20px;
+   
     display:flex;
     flex-direction: column;
-    width: 42% !important;
-    margin-left:390px;
+ 
+
     color: white;
     padding: 20px;
     height: 200px;
@@ -28,7 +28,7 @@
  }
 
  input{
-  overflow-wrap: break-word;
+ 
  }
 
  .postingg{

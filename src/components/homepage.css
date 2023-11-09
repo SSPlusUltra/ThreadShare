@@ -1,0 +1,16 @@
+.hp{
+ width:50%;
+ display: flex;
+ flex-direction: column;
+ gap:1em;
+   
+ 
+ 
+}
+
+.owo{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   padding-top:20px;
+}

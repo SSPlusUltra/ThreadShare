@@ -5,19 +5,49 @@ import './subredditpage.css'
 import { useLocation } from 'react-router-dom';
 import PostDisplay from './displaypost';
 import Communitydiv from './communitydiv';
+import { auth } from '../firebase';
 
 const SubredditPage = (props) => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const title = queryParams.get('title');
   const subredditPosts = props.pdata.filter((post) => post.subreddit === title);
+  async function handlesave(post){
+    const res = await fetch(`https://reddit-react-46092-default-rtdb.firebaseio.com/posts.json`)
+  
+        const R = await res.json();
+  const reqid = Object.keys(R).find((key) => (
+    R[key].pid === post.pid
+  ));
+  const id = auth.currentUser.uid
+   const ms = R[reqid];
+  
+    if(!ms.members[id]){
+      ms.members[id] = true;
+    }
+    else{
+      ms.members[id] = false;
+    }
+  
+  
+    const response = await fetch(`https://reddit-react-46092-default-rtdb.firebaseio.com/posts/${reqid}.json`, {
+        method: 'PUT',
+        body: JSON.stringify(ms),
+        headers:{
+          'Content-Type': 'application/json'
+        }
+      });
+  
+  }
 
   return (
-    <div className='ali'>
-      <h1>{title}</h1>
-      <div className='thread-page-container'>
+    <div className='sp-cd'>
+      <div><h2 style={{'color':'white'}}>{title}</h2></div>
+      <div className='cd-sp'>
 
-      {subredditPosts.length > 0 ? (
+<div className='sp-sp'>
+
+{subredditPosts.length > 0 && (
         subredditPosts.map((post) => (
           <PostDisplay  v1={post.title}
           v2={post.description}
@@ -28,16 +58,29 @@ const SubredditPage = (props) => {
           DownclickHandler = {props.Dv} 
           upress = {post.upvotepressed}
           dpress = {post.downvotepressed}
-          key={post.pid}/>
+          key={post.pid}
+          onhandle={handlesave}
+          v6={post}/>
+          
           
         ))
-      ) : (
-        <p>No posts found for this subreddit. Click on the "+" button below to create posts in this subreddit</p>
-      )}
+      ) }
 
-      <Communitydiv title={title} newD = {props.formD}/>
+</div>
 
-      </div>
+
+
+        
+    
+
+
+<div className=  {props.cl? 'zi':'cd-cd' } ><Communitydiv title = {title} newD={props.formD}/></div>
+</div>
+
+   
+      
+
+
 
 
       <Link to={{

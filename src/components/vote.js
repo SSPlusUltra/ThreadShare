@@ -7,11 +7,11 @@ import { auth } from '../firebase';
 const Vote = (props)=>{
  const userId = auth.currentUser.uid;
     const handleupvoteclick = ()=>{
-      props.Upclickhandle(props.uid, props.postId);
+      props.Upclickhandle(userId, props.postId);
     }
 
     const handledownvoteclick = ()=>{
-      props.Downclickhandle(props.uid, props.postId);
+      props.Downclickhandle(userId, props.postId);
     }
 
     const up = props.upre|| false

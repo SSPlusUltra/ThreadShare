@@ -1,24 +1,13 @@
 /* SubredditPage.css */
 
 /* Styles for the SubredditPage container */
-.subreddit-page {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
+
   .subreddit-page h1 {
     font-size: 24px;
     margin-bottom: 20px;
   }
   
-  /* Styles for the posts */
-  .post {
-    background-color: #f8f8f8;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-  }
+  
   
   /* Styles for the "+" button */
   .add-post-btn {
@@ -43,8 +32,36 @@
     cursor: pointer;
   }
   
-  .thread-page-container{
-    display:flex;
+  .sp-cd{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:0.5em;
+    
+  }
+
+  .cd-sp{
+   display: flex;
+   width:60%;
+   gap:1em;
+  
+  }
+
+
+  .cd-cd{
+    width:30%;
+   
+  }
+
+  .zi{
+    width:30%;
+    z-index:-1;
+   
+  }
+
+  .sp-sp{
+    display: flex;
+    flex-direction: column;
     gap:1em;
-    align-items: flex-start;
+    width:80%;
   }
